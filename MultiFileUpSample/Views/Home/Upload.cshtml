@@ -1,0 +1,19 @@
+﻿@model IEnumerable<HttpPostedFileBase>
+@using System.IO
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploaded</title>
+</head>
+<body>
+    <p>Uploaded.</p>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@Path.GetFileName(item.FileName) (@item.ContentType), @item.ContentLength bytes.</li>
+        }
+    </ul>
+
+    <p>@Html.ActionLink("< back", "Index")</p>
+</body>
+</html>
