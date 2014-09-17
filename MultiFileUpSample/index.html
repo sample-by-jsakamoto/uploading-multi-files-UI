@@ -11,10 +11,7 @@
                    name="upfile"
                    data-index="{{$index}}"
                    onchange="$(this).scope().file_changed($(this))" />
-            <button ng-click="remove($index)"
-                    ng-show="!$last">
-                X
-            </button>
+            <button ng-click="reset($index)">X</button>
         </p>
 
         <p>

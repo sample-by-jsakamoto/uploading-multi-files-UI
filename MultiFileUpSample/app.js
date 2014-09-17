@@ -19,28 +19,25 @@ var theApp;
             var _this = this;
             // initialize states.
             $scope.is_empty = true;
-            $scope.serialNumber = 1;
-            $scope.files = [new FileModel($scope.serialNumber)];
+            $scope.files = [];
+            for (var i = 1; i <= 5; i++) {
+                $scope.files.push(new FileModel(i));
+            }
+            $scope.serialNumber = $scope.files.length + 1;
 
             // handle DOM event
             $scope.file_changed = function (element) {
                 var file = $scope.files[element.data('index')];
                 file.src = element.val();
                 $scope.$apply(function () {
-                    // if there is no empty input:file elements, then append file model.
-                    if ($scope.files.every(function (f) {
-                        return f.src != '';
-                    })) {
-                        $scope.serialNumber++;
-                        $scope.files.push(new FileModel($scope.serialNumber));
-                    }
                     _this.updateState($scope);
                 });
             };
 
-            // hanlde remove action.
-            $scope.remove = function (index) {
-                $scope.files.splice(index, 1);
+            // hanlde reset action.
+            $scope.reset = function (index) {
+                $scope.serialNumber++;
+                $scope.files.splice(index, 1, new FileModel($scope.serialNumber));
                 _this.updateState($scope);
             };
         }

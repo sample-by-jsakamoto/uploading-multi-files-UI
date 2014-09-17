@@ -10,7 +10,7 @@ module theApp {
 
         // actions
         file_changed: (a: JQuery) => void;
-        remove: (a: number) => void;
+        reset: (a: number) => void;
     }
 
     // model class for tracking input:file element.
@@ -30,26 +30,25 @@ module theApp {
         constructor($scope: IScope) {
             // initialize states.
             $scope.is_empty = true;
-            $scope.serialNumber = 1;
-            $scope.files = [new FileModel($scope.serialNumber)];
+            $scope.files = [];
+            for (var i = 1; i <= 5; i++) {
+                $scope.files.push(new FileModel(i));
+            }
+            $scope.serialNumber = $scope.files.length + 1;
 
             // handle DOM event
             $scope.file_changed = (element) => {
                 var file = $scope.files[element.data('index')];
                 file.src = element.val();
                 $scope.$apply(() => {
-                    // if there is no empty input:file elements, then append file model.
-                    if ($scope.files.every(f => f.src != '')) {
-                        $scope.serialNumber++;
-                        $scope.files.push(new FileModel($scope.serialNumber));
-                    }
                     this.updateState($scope);
                 });
             };
 
-            // hanlde remove action.
-            $scope.remove = (index) => {
-                $scope.files.splice(index, 1);
+            // hanlde reset action.
+            $scope.reset = (index) => {
+                $scope.serialNumber++;
+                $scope.files.splice(index, 1, new FileModel($scope.serialNumber));
                 this.updateState($scope);
             };
         }
