@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body ng-app ng-controller="theApp.FileUpController">
+    <form action="./Home/Upload" method="post" enctype="multipart/form-data">
+
+        <p ng-repeat="file in files">
+            <input type="file"
+                   name="upfile"
+                   data-index="{{$index}}"
+                   onchange="$(this).scope().file_changed($(this))" />
+            <button ng-click="remove($index)"
+                    ng-show="!$last">
+                X
+            </button>
+        </p>
+
+        <p>
+            <input type="submit" value="upload" ng-disabled="is_empty" />
+        </p>
+    </form>
+    <script src="./Scripts/jquery-1.11.1.js"></script>
+    <script src="./Scripts/angular.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
